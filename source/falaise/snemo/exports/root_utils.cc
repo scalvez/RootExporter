@@ -1,7 +1,7 @@
 // -*- mode: c++ ; -*-
 /* root_utils.cc */
 
-#include <snreconstruction/exports/root_utils.h>
+#include <falaise/snemo/exports/root_utils.h>
 
 #include <sstream>
 #include <stdexcept>

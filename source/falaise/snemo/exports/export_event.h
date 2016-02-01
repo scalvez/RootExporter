@@ -1,5 +1,5 @@
 // -*- mode: c++ ; -*-
-/* export_event.h 
+/* export_event.h
  *
  * Author (s) :     Francois Mauger <mauger@lpccaen.in2p3.fr>
  * Creation date: 2012-11-09
@@ -38,13 +38,13 @@ namespace snemo {
         bank_version_ = Type::EXPORT_VERSION;
         return;
       }
-      
+
       template<class Type>
       bool bank_check_export_version (int32_t bank_version_)
       {
         return bank_version_ >= 0 && bank_version_ <= Type::EXPORT_VERSION;
       }
- 
+
       template<class Type>
       const std::string & describe_class ();
 
@@ -63,7 +63,7 @@ namespace snemo {
           };
       };
 
-      struct event_header_type 
+      struct event_header_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -71,17 +71,17 @@ namespace snemo {
         void reset ();
       public:
         int32_t run_number;   // >=0
-        int32_t event_number; // >=0 
+        int32_t event_number; // >=0
         bool    simulated;    // simulated event=true, real event=false
         int64_t seconds;      // >=0 [s]
-        int64_t picoseconds;  // >=0 [ps]   
+        int64_t picoseconds;  // >=0 [ps]
 
         // Auxiliary properties :
         bool export_cat_infos;
 
       };
 
-      struct true_vertex_type 
+      struct true_vertex_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -135,7 +135,7 @@ namespace snemo {
         double  pzstop;  // keV
         double  delta_energy;  // keV
       };
- 
+
       struct true_gg_hit_type
       {
       public:
@@ -159,8 +159,8 @@ namespace snemo {
         double  yanode;       // mm
         double  zanode;       // mm
       };
- 
-      struct true_scin_hit_type 
+
+      struct true_scin_hit_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -229,7 +229,7 @@ namespace snemo {
         double   cat_helix_z_error;
        };
 
-      struct calib_calorimeter_hit_type 
+      struct calib_calorimeter_hit_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -249,8 +249,8 @@ namespace snemo {
         double  energy;       // keV
         double  sigma_energy; // keV
       };
- 
-      struct tracker_cluster_type 
+
+      struct tracker_cluster_type
       {
       public:
          tracker_cluster_type ();
@@ -309,7 +309,7 @@ namespace snemo {
         double   cat_tangent_decay_vertex_z_error;
      };
 
-      struct tracker_clustered_hit_type 
+      struct tracker_clustered_hit_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -328,8 +328,8 @@ namespace snemo {
           PATTERN_POLYLINE = 1,
           PATTERN_HELIX    = 2,
         };
- 
-      struct tracker_trajectory_type 
+
+      struct tracker_trajectory_type
       {
       public:
         tracker_trajectory_type ();
@@ -345,8 +345,8 @@ namespace snemo {
         uint32_t number_of_orphans; // >=0
         int32_t  pattern_id;        // >=0
       };
- 
-      struct tracker_trajectory_orphan_hit_type 
+
+      struct tracker_trajectory_orphan_hit_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -357,8 +357,8 @@ namespace snemo {
         int32_t trajectory_id; // >=0
         int32_t hit_id;        // >=0
       };
-       
-      struct vertex_type 
+
+      struct vertex_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -376,7 +376,7 @@ namespace snemo {
         double  z_error;
       };
 
-      struct polyline_type 
+      struct polyline_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -387,7 +387,7 @@ namespace snemo {
         uint32_t number_of_vertexes; // >=0
       };
 
-      struct helix_type 
+      struct helix_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -404,7 +404,7 @@ namespace snemo {
         double  t1;
       };
 
-      struct tracker_trajectory_pattern_type 
+      struct tracker_trajectory_pattern_type
       {
       public:
         static const int32_t EXPORT_VERSION = 0;
@@ -422,7 +422,7 @@ namespace snemo {
         int32_t  helix_id;
         int32_t  polyline_id;
       };
-      
+
       template <class Type>
       void audit_vector (const std::vector< Type > & v_, int i_)
       {
@@ -435,7 +435,7 @@ namespace snemo {
 
       struct export_event
       {
-      public: 
+      public:
         static const int32_t EXPORT_VERSION = 0;
         export_event ();
         virtual ~export_event ();
@@ -443,11 +443,11 @@ namespace snemo {
         void clear_data ();
 
         const true_vertex_type & get_true_vertex (int i_) const;
- 
+
         const true_particle_type & get_true_particle (int i_) const;
- 
+
         const true_step_hit_type & get_true_step_hit (int i_) const;
- 
+
         const true_scin_hit_type & get_true_calo_hit (int i_) const;
 
         const true_scin_hit_type & get_true_xcalo_hit (int i_) const;
@@ -477,7 +477,7 @@ namespace snemo {
         const helix_type & get_tracker_trajectory_helix (int i_) const;
 
         static void implement_introspection ();
-  
+
         struct introspection_activator
         {
           introspection_activator ();
@@ -516,9 +516,8 @@ namespace snemo {
         std::vector<helix_type>                 tracker_trajectory_helices;              /// Helices
         std::vector<tracker_trajectory_orphan_hit_type>  tracker_trajectory_orphan_hits; /// Tracker trajectory orphan hit
         std::vector<tracker_trajectory_pattern_type>  tracker_trajectory_patterns;       /// Tracker trajectory patterns
- 
-      };
 
+      };
 
       template<class Type>
       const std::string & get_class_description ()
@@ -527,7 +526,7 @@ namespace snemo {
         if (g_description.get () == 0)
           {
             std::ostringstream oss;
- 
+
             const camp::Class & meta_class = camp::classByType<Type> ();
             for (int i = 0; i < meta_class.propertyCount(); i++)
               {

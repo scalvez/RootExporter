@@ -1,21 +1,21 @@
 // -*- mode: c++ ; -*-
 /* event_exporter.cc */
 
-#include <snreconstruction/exports/event_exporter.h>
-#include <snreconstruction/exports/export_event.h>
+#include <falaise/snemo/exports/event_exporter.h>
+#include <falaise/snemo/exports/export_event.h>
 
 #include <mctools/simulated_data.h>
-#include <sncore/models/event_header.h>
-#include <sncore/models/calibrated_data.h>
-#include <sncore/models/tracker_clustering_data.h>
-#include <sncore/models/tracker_clustering_solution.h>
-#include <sncore/models/tracker_cluster.h>
-#include <sncore/models/tracker_trajectory_data.h>
-#include <sncore/models/tracker_trajectory_solution.h>
-#include <sncore/models/tracker_trajectory.h>
+#include <falaise/snemo/datamodels/event_header.h>
+#include <falaise/snemo/datamodels/calibrated_data.h>
+#include <falaise/snemo/datamodels/tracker_clustering_data.h>
+#include <falaise/snemo/datamodels/tracker_clustering_solution.h>
+#include <falaise/snemo/datamodels/tracker_cluster.h>
+#include <falaise/snemo/datamodels/tracker_trajectory_data.h>
+#include <falaise/snemo/datamodels/tracker_trajectory_solution.h>
+#include <falaise/snemo/datamodels/tracker_trajectory.h>
 
 #include <mctools/utils.h>
-#include <sncore/utils/utils.h>
+// #include <sncore/utils/utils.h>
 
 #include <geomtools/manager.h>
 #include <datatools/things_macros.h>
@@ -30,8 +30,9 @@ namespace snemo {
 
     namespace exports {
 
-      namespace scm = snemo::core::model;
-      namespace scu = snemo::core::utils;
+      // namespace scm = snemo::core::model;
+      namespace sdm = snemo::datamodel;
+      // namespace scu = snemo::core::utils;
       namespace sre = snemo::reconstruction::exports;
 
       bool event_exporter::is_initialized () const
@@ -296,11 +297,11 @@ namespace snemo {
       {
         _bank_labels_.clear ();
         // Default bank names for "EH", "SD", "CD", "TCD", "TTD" :
-        _bank_labels_[scm::data_info::EVENT_HEADER_LABEL]            = scm::data_info::EVENT_HEADER_LABEL;
-        _bank_labels_[scm::data_info::SIMULATED_DATA_LABEL]          = scm::data_info::SIMULATED_DATA_LABEL;
-        _bank_labels_[scm::data_info::CALIBRATED_DATA_LABEL]         = scm::data_info::CALIBRATED_DATA_LABEL;
-        _bank_labels_[scm::data_info::TRACKER_CLUSTERING_DATA_LABEL] = scm::data_info::TRACKER_CLUSTERING_DATA_LABEL;
-        _bank_labels_[scm::data_info::TRACKER_TRAJECTORY_DATA_LABEL] = scm::data_info::TRACKER_TRAJECTORY_DATA_LABEL;
+        _bank_labels_[sdm::data_info::EVENT_HEADER_LABEL]            = sdm::data_info::EVENT_HEADER_LABEL;
+        _bank_labels_[sdm::data_info::SIMULATED_DATA_LABEL]          = sdm::data_info::SIMULATED_DATA_LABEL;
+        _bank_labels_[sdm::data_info::CALIBRATED_DATA_LABEL]         = sdm::data_info::CALIBRATED_DATA_LABEL;
+        _bank_labels_[sdm::data_info::TRACKER_CLUSTERING_DATA_LABEL] = sdm::data_info::TRACKER_CLUSTERING_DATA_LABEL;
+        _bank_labels_[sdm::data_info::TRACKER_TRAJECTORY_DATA_LABEL] = sdm::data_info::TRACKER_TRAJECTORY_DATA_LABEL;
         return;
       }
 
@@ -389,7 +390,7 @@ namespace snemo {
         return;
       }
 
-      int event_exporter::run (const scm::event_record & er_,
+      int event_exporter::run (const sdm::event_record & er_,
                                sre::export_event & ee_)
       {
         if (! is_initialized ())
@@ -454,12 +455,12 @@ namespace snemo {
       int event_exporter::_export_event_header (const datatools::things & er_,
                                                 sre::export_event & ee_)
       {
-        const std::string & eh_label = _bank_labels_[scm::data_info::EVENT_HEADER_LABEL];
-        if (! DATATOOLS_THINGS_CHECK_BANK(er_, eh_label, scm::event_header))
+        const std::string & eh_label = _bank_labels_[sdm::data_info::EVENT_HEADER_LABEL];
+        if (! DATATOOLS_THINGS_CHECK_BANK(er_, eh_label, sdm::event_header))
           {
             DT_THROW_IF (true, std::logic_error, "Missing event header data to be processed !");
           }
-        DATATOOLS_THINGS_CONST_BANK(er_, eh_label, scm::event_header, EH);
+        DATATOOLS_THINGS_CONST_BANK(er_, eh_label, sdm::event_header, EH);
 
         ee_.event_header.run_number   = EH.get_id ().get_run_number ();
         ee_.event_header.event_number = EH.get_id ().get_event_number ();
@@ -478,7 +479,7 @@ namespace snemo {
       int event_exporter::_export_true_particles (const datatools::things & er_,
                                                   sre::export_event & ee_)
       {
-        const std::string & sd_label = _bank_labels_ [scm::data_info::SIMULATED_DATA_LABEL];
+        const std::string & sd_label = _bank_labels_ [sdm::data_info::SIMULATED_DATA_LABEL];
         if (! DATATOOLS_THINGS_CHECK_BANK(er_, sd_label, mctools::simulated_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing simulated data to be processed !");
@@ -523,7 +524,7 @@ namespace snemo {
       int event_exporter::_export_true_step_hits (const datatools::things & er_,
                                                   sre::export_event & ee_)
       {
-        const std::string & sd_label = _bank_labels_ [scm::data_info::SIMULATED_DATA_LABEL];
+        const std::string & sd_label = _bank_labels_ [sdm::data_info::SIMULATED_DATA_LABEL];
         if (! DATATOOLS_THINGS_CHECK_BANK(er_, sd_label, mctools::simulated_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing simulated data to be processed !");
@@ -538,7 +539,7 @@ namespace snemo {
       int event_exporter::_export_true_hits (const datatools::things & er_,
                                              sre::export_event & ee_)
       {
-        const std::string & sd_label = _bank_labels_[scm::data_info::SIMULATED_DATA_LABEL];
+        const std::string & sd_label = _bank_labels_[sdm::data_info::SIMULATED_DATA_LABEL];
         if (! DATATOOLS_THINGS_CHECK_BANK(er_, sd_label, mctools::simulated_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing simulated data to be processed !");
@@ -682,18 +683,18 @@ namespace snemo {
       int event_exporter::_export_calib_calorimeter_hits (const datatools::things & er_,
                                                           sre::export_event & ee_)
       {
-        const std::string & cd_label = _bank_labels_[scm::data_info::CALIBRATED_DATA_LABEL];
-        if (! DATATOOLS_THINGS_CHECK_BANK(er_, cd_label, scm::calibrated_data))
+        const std::string & cd_label = _bank_labels_[sdm::data_info::CALIBRATED_DATA_LABEL];
+        if (! DATATOOLS_THINGS_CHECK_BANK(er_, cd_label, sdm::calibrated_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing calibrated data to be processed !");
           }
-        DATATOOLS_THINGS_CONST_BANK(er_, cd_label, scm::calibrated_data, CD);
+        DATATOOLS_THINGS_CONST_BANK(er_, cd_label, sdm::calibrated_data, CD);
 
-        BOOST_FOREACH (const scm::calibrated_data::calorimeter_hit_handle_type & scin_handle,
+        BOOST_FOREACH (const sdm::calibrated_data::calorimeter_hit_handle_type & scin_handle,
                        CD.calibrated_calorimeter_hits ())
           {
             if (! scin_handle.has_data ()) continue;
-            const scm::calibrated_calorimeter_hit & sncore_scin_hit = scin_handle.get ();
+            const sdm::calibrated_calorimeter_hit & sncore_scin_hit = scin_handle.get ();
             {
               sre::calib_calorimeter_hit_type dummy;
               ee_.calib_scin_hits.push_back (dummy);
@@ -744,18 +745,18 @@ namespace snemo {
       int event_exporter::_export_calib_tracker_hits (const datatools::things & er_,
                                                       sre::export_event & ee_)
       {
-        const std::string & cd_label = _bank_labels_[scm::data_info::CALIBRATED_DATA_LABEL];
-        if (! DATATOOLS_THINGS_CHECK_BANK(er_, cd_label, scm::calibrated_data))
+        const std::string & cd_label = _bank_labels_[sdm::data_info::CALIBRATED_DATA_LABEL];
+        if (! DATATOOLS_THINGS_CHECK_BANK(er_, cd_label, sdm::calibrated_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing calibrated data to be processed !");
           }
-        DATATOOLS_THINGS_CONST_BANK(er_, cd_label, scm::calibrated_data, CD);
+        DATATOOLS_THINGS_CONST_BANK(er_, cd_label, sdm::calibrated_data, CD);
 
-        BOOST_FOREACH (const scm::calibrated_data::tracker_hit_handle_type & gg_handle,
+        BOOST_FOREACH (const sdm::calibrated_data::tracker_hit_handle_type & gg_handle,
                        CD.calibrated_tracker_hits ())
           {
             if (! gg_handle.has_data ()) continue;
-            const scm::calibrated_tracker_hit & sncore_gg_hit = gg_handle.get ();
+            const sdm::calibrated_tracker_hit & sncore_gg_hit = gg_handle.get ();
             {
               sre::calib_tracker_hit_type dummy;
               ee_.calib_gg_hits.push_back (dummy);
@@ -825,12 +826,12 @@ namespace snemo {
       {
         const datatools::logger::priority local_priority = datatools::logger::PRIO_WARNING;
         DT_LOG_TRACE (local_priority, "Entering...");
-        const std::string & tcd_label = _bank_labels_[scm::data_info::TRACKER_CLUSTERING_DATA_LABEL];
-        if (! DATATOOLS_THINGS_CHECK_BANK(er_, tcd_label, scm::tracker_clustering_data))
+        const std::string & tcd_label = _bank_labels_[sdm::data_info::TRACKER_CLUSTERING_DATA_LABEL];
+        if (! DATATOOLS_THINGS_CHECK_BANK(er_, tcd_label, sdm::tracker_clustering_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing tracker clustering data to be processed !");
           }
-        DATATOOLS_THINGS_CONST_BANK(er_, tcd_label, scm::tracker_clustering_data, TCD);
+        DATATOOLS_THINGS_CONST_BANK(er_, tcd_label, sdm::tracker_clustering_data, TCD);
         ee_.tracker_clusters.clear();
         ee_.tracker_clustered_hits.clear();
         if (! TCD.has_default_solution ())
@@ -839,16 +840,16 @@ namespace snemo {
             return 0;
           }
         DT_LOG_TRACE (local_priority, "Loop on clusters...");
-        const scm::tracker_clustering_solution & TCS = TCD.get_default_solution ();
+        const sdm::tracker_clustering_solution & TCS = TCD.get_default_solution ();
         int32_t TCS_id = TCS.get_solution_id ();
         DT_LOG_TRACE (local_priority, "TCS_id=" << TCS_id);
         ee_.tracker_clusters.reserve (TCS.get_clusters ().size ());
         DT_LOG_TRACE (local_priority, "# of clusters = " << TCS.get_clusters ().size ());
-        BOOST_FOREACH (const scm::tracker_clustering_solution::cluster_handle_type & cluster_handle,
+        BOOST_FOREACH (const sdm::tracker_clustering_solution::cluster_handle_type & cluster_handle,
                        TCS.get_clusters ())
           {
             if (! cluster_handle.has_data ()) continue;
-            const scm::tracker_cluster & sncore_cluster = cluster_handle.get ();
+            const sdm::tracker_cluster & sncore_cluster = cluster_handle.get ();
             DT_LOG_TRACE (local_priority, " --> Cluster : ");
             if (local_priority >= datatools::logger::PRIO_TRACE)
               {
@@ -892,7 +893,7 @@ namespace snemo {
           }
 
         DT_LOG_TRACE (local_priority, "Loop on unclustered hits...");
-        BOOST_FOREACH (const scm::calibrated_data::tracker_hit_handle_type & uchit_handle,
+        BOOST_FOREACH (const sdm::calibrated_data::tracker_hit_handle_type & uchit_handle,
                        TCS.get_unclustered_hits ())
           {
             if (! uchit_handle.has_data ()) continue;
@@ -910,7 +911,7 @@ namespace snemo {
       }
 
 
-        void event_exporter::_export_tracker_clustering_cat (const scm::tracker_cluster & cluster_,
+        void event_exporter::_export_tracker_clustering_cat (const sdm::tracker_cluster & cluster_,
                                                              sre::tracker_cluster_type & tc_)
         {
           tc_.has_cat_infos = true;
@@ -984,25 +985,25 @@ namespace snemo {
       int event_exporter::_export_tracker_trajectories (const datatools::things & er_,
                                                         sre::export_event & ee_)
       {
-        const std::string & ttd_label = _bank_labels_[scm::data_info::TRACKER_TRAJECTORY_DATA_LABEL];
-        if (! DATATOOLS_THINGS_CHECK_BANK(er_, ttd_label, scm::tracker_trajectory_data))
+        const std::string & ttd_label = _bank_labels_[sdm::data_info::TRACKER_TRAJECTORY_DATA_LABEL];
+        if (! DATATOOLS_THINGS_CHECK_BANK(er_, ttd_label, sdm::tracker_trajectory_data))
           {
             DT_THROW_IF (true, std::logic_error, "Missing tracker trajectory data to be processed !");
           }
-        DATATOOLS_THINGS_CONST_BANK(er_, ttd_label, scm::tracker_trajectory_data, TTD);
+        DATATOOLS_THINGS_CONST_BANK(er_, ttd_label, sdm::tracker_trajectory_data, TTD);
         if (! TTD.has_default_solution ())
           {
             return 0;
           }
-        const scm::tracker_trajectory_solution & TTS = TTD.get_default_solution ();
+        const sdm::tracker_trajectory_solution & TTS = TTD.get_default_solution ();
         int32_t TTS_id = TTS.get_solution_id ();
         ee_.tracker_trajectories.reserve (TTS.get_trajectories ().size ());
 
-        BOOST_FOREACH (const scm::tracker_trajectory_solution::trajectory_handle_type & trajectory_handle,
+        BOOST_FOREACH (const sdm::tracker_trajectory_solution::trajectory_handle_type & trajectory_handle,
                        TTS.get_trajectories ())
           {
             if (! trajectory_handle.has_data ()) continue;
-            const scm::tracker_trajectory & sncore_trajectory = trajectory_handle.get ();
+            const sdm::tracker_trajectory & sncore_trajectory = trajectory_handle.get ();
             {
               sre::tracker_trajectory_type dummy;
               ee_.tracker_trajectories.push_back (dummy);
@@ -1018,7 +1019,7 @@ namespace snemo {
             TT.cluster_id    = sncore_trajectory.get_cluster ().get_cluster_id ();
             TT.delayed       = sncore_trajectory.get_cluster ().is_delayed ();
             TT.number_of_orphans = sncore_trajectory.get_orphans ().size ();
-            BOOST_FOREACH (const scm::calibrated_data::tracker_hit_handle_type & ohit_handle,
+            BOOST_FOREACH (const sdm::calibrated_data::tracker_hit_handle_type & ohit_handle,
                            sncore_trajectory.get_orphans ())
               {
                 if (! ohit_handle.has_data ()) continue;

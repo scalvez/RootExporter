@@ -2,7 +2,7 @@
 /* loggable_support.cc
  */
 
-#include <snreconstruction/exports/loggable_support.h>
+#include <falaise/snemo/exports/loggable_support.h>
 
 #include <string>
 

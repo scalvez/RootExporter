@@ -24,7 +24,7 @@
 #include <boost/cstdint.hpp>
 
 #include <datatools/bit_mask.h>
-#include <sncore/models/data_model.h>
+#include <falaise/snemo/datamodels/data_model.h>
 
 namespace geomtools {
   class manager;
@@ -35,11 +35,9 @@ namespace datatools {
 
 namespace snemo {
 
-  namespace core {
-    namespace model {
+    namespace datamodel {
       class tracker_cluster;
     }
-  }
 
   namespace reconstruction {
 
@@ -150,7 +148,7 @@ namespace snemo {
 
         void reset ();
 
-        int run (const snemo::core::model::event_record &,
+        int run (const snemo::datamodel::event_record &,
                  snemo::reconstruction::exports::export_event &);
 
         uint32_t get_export_flags () const;
@@ -187,7 +185,7 @@ namespace snemo {
         int _export_tracker_clustering (const datatools::things &,
                                         snemo::reconstruction::exports::export_event &);
 
-        void _export_tracker_clustering_cat (const snemo::core::model::tracker_cluster & cluster_,
+        void _export_tracker_clustering_cat (const snemo::datamodel::tracker_cluster & cluster_,
                                              snemo::reconstruction::exports::tracker_cluster_type & tc_);
 
 

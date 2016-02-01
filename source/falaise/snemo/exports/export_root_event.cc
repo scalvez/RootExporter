@@ -1,8 +1,8 @@
 // -*- mode: c++ ; -*-
 /* export_root_event.cc */
 
-#include <snreconstruction/exports/export_root_event.h>
-#include <snreconstruction/exports/event_exporter.h>
+#include <falaise/snemo/exports/export_root_event.h>
+#include <falaise/snemo/exports/event_exporter.h>
 
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>

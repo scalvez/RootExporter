@@ -20,9 +20,9 @@
 
 #include <iostream>
 
-#include <snreconstruction/exports/export_event.h>
-#include <snreconstruction/exports/root_utils.h>
-#include <snreconstruction/exports/loggable_support.h>
+#include <falaise/snemo/exports/export_event.h>
+#include <falaise/snemo/exports/root_utils.h>
+#include <falaise/snemo/exports/loggable_support.h>
 
 class TTree;
 

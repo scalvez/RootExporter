@@ -1,8 +1,8 @@
 // -*- mode: c++ ; -*-
 /* export_event.cc */
 
-#include <snreconstruction/exports/export_event.h>
-#include <snreconstruction/exports/event_exporter.h>
+#include <falaise/snemo/exports/export_event.h>
+#include <falaise/snemo/exports/event_exporter.h>
 
 #include <sstream>
 #include <limits>
@@ -18,7 +18,7 @@ namespace snemo {
       const int32_t constants::INVALID_INTEGER   = -1;
       const int64_t constants::INVALID_INTEGER64 = -1;
       const double  constants::INVALID_DOUBLE    = std::numeric_limits<double>::quiet_NaN ();
-     
+
       /***********************************************/
 
       event_header_type::event_header_type ()
@@ -38,7 +38,7 @@ namespace snemo {
         export_cat_infos = false;
         return;
       }
- 
+
       /***********************************************/
 
       true_vertex_type::true_vertex_type ()
@@ -240,7 +240,7 @@ namespace snemo {
         cat_tangency_x_error = constants::INVALID_DOUBLE;
         cat_tangency_y_error = constants::INVALID_DOUBLE;
         cat_tangency_z_error = constants::INVALID_DOUBLE;
-        
+
         cat_helix_x = constants::INVALID_DOUBLE;
         cat_helix_y = constants::INVALID_DOUBLE;
         cat_helix_z = constants::INVALID_DOUBLE;
@@ -260,8 +260,8 @@ namespace snemo {
 
       void tracker_clustered_hit_type::reset ()
       {
-        solution_id = constants::INVALID_ID;     
-        cluster_id = constants::INVALID_ID;     
+        solution_id = constants::INVALID_ID;
+        cluster_id = constants::INVALID_ID;
         hit_id = constants::INVALID_ID;
         return;
       }
@@ -277,13 +277,13 @@ namespace snemo {
       void tracker_cluster_type::reset ()
       {
         solution_id = constants::INVALID_ID;
-        cluster_id = constants::INVALID_ID;     
-        module = constants::INVALID_ID;     
-        side  = constants::INVALID_ID;     
+        cluster_id = constants::INVALID_ID;
+        module = constants::INVALID_ID;
+        side  = constants::INVALID_ID;
         delayed = false;
         number_of_hits = 0;
         // CAT specific properties :
-        reset_cat();       
+        reset_cat();
         return;
       }
 
@@ -331,10 +331,10 @@ namespace snemo {
         cat_tangent_decay_vertex_x_error = constants::INVALID_DOUBLE;
         cat_tangent_decay_vertex_y_error = constants::INVALID_DOUBLE;
         cat_tangent_decay_vertex_z_error = constants::INVALID_DOUBLE;
- 
+
         return;
       }
- 
+
       /***********************************************/
 
       vertex_type::vertex_type ()
@@ -345,9 +345,9 @@ namespace snemo {
 
       void vertex_type::reset ()
       {
-        vertex_id = constants::INVALID_ID;     
-        parent_type = constants::INVALID_ID;     
-        parent_id = constants::INVALID_ID;     
+        vertex_id = constants::INVALID_ID;
+        parent_type = constants::INVALID_ID;
+        parent_id = constants::INVALID_ID;
         x = constants::INVALID_DOUBLE;
         z = constants::INVALID_DOUBLE;
         x = constants::INVALID_DOUBLE;
@@ -368,7 +368,7 @@ namespace snemo {
       void polyline_type::reset ()
       {
         polyline_id = constants::INVALID_ID;
-        number_of_vertexes = 0;    
+        number_of_vertexes = 0;
         return;
       }
 
@@ -404,13 +404,13 @@ namespace snemo {
       void tracker_trajectory_type::reset ()
       {
         solution_id = constants::INVALID_ID;
-        trajectory_id = constants::INVALID_ID;     
-        module = constants::INVALID_ID;     
-        side  = constants::INVALID_ID;     
-        cluster_id = constants::INVALID_ID;     
+        trajectory_id = constants::INVALID_ID;
+        module = constants::INVALID_ID;
+        side  = constants::INVALID_ID;
+        cluster_id = constants::INVALID_ID;
         delayed = false;
         number_of_orphans = 0;
-        pattern_id = constants::INVALID_ID;     
+        pattern_id = constants::INVALID_ID;
         return;
       }
 
@@ -424,8 +424,8 @@ namespace snemo {
 
       void tracker_trajectory_orphan_hit_type::reset ()
       {
-        solution_id = constants::INVALID_ID;     
-        trajectory_id = constants::INVALID_ID;     
+        solution_id = constants::INVALID_ID;
+        trajectory_id = constants::INVALID_ID;
         hit_id = constants::INVALID_ID;
         return;
       }
@@ -440,9 +440,9 @@ namespace snemo {
 
       void tracker_trajectory_pattern_type::reset ()
       {
-        solution_id   = constants::INVALID_ID;     
-        trajectory_id = constants::INVALID_ID;     
-        pattern_id = constants::INVALID_ID;     
+        solution_id   = constants::INVALID_ID;
+        trajectory_id = constants::INVALID_ID;
+        pattern_id = constants::INVALID_ID;
         pattern_type  = constants::INVALID_ID;
         length        = constants::INVALID_DOUBLE;
         vertex0_id    = constants::INVALID_ID;
@@ -580,119 +580,119 @@ namespace snemo {
         return;
       }
 
-      const true_vertex_type & 
+      const true_vertex_type &
       export_event::get_true_vertex (int i_) const
       {
         audit_vector<true_vertex_type> (true_vertices, i_);
         return true_vertices.at(i_);
       }
- 
-      const true_particle_type & 
+
+      const true_particle_type &
       export_event::get_true_particle (int i_) const
       {
         audit_vector<true_particle_type> (true_particles, i_);
         return true_particles.at(i_);
       }
- 
-      const true_step_hit_type & 
+
+      const true_step_hit_type &
       export_event::get_true_step_hit (int i_) const
       {
         audit_vector<true_step_hit_type> (true_step_hits, i_);
         return true_step_hits.at(i_);
       }
- 
-      const true_scin_hit_type & 
+
+      const true_scin_hit_type &
       export_event::get_true_calo_hit (int i_) const
       {
         audit_vector<true_scin_hit_type> (true_calo_hits, i_);
         return true_calo_hits.at(i_);
       }
 
-      const true_scin_hit_type & 
+      const true_scin_hit_type &
       export_event::get_true_xcalo_hit (int i_) const
       {
         audit_vector<true_scin_hit_type> (true_xcalo_hits, i_);
         return true_xcalo_hits.at(i_);
       }
 
-      const true_scin_hit_type & 
+      const true_scin_hit_type &
       export_event::get_true_gveto_hit (int i_) const
       {
         audit_vector<true_scin_hit_type> (true_gveto_hits, i_);
         return true_gveto_hits.at(i_);
       }
 
-      const true_gg_hit_type & 
+      const true_gg_hit_type &
       export_event::get_true_gg_hit (int i_) const
       {
         audit_vector<true_gg_hit_type> (true_gg_hits, i_);
         return true_gg_hits.at(i_);
       }
 
-      const calib_calorimeter_hit_type & 
+      const calib_calorimeter_hit_type &
       export_event::get_calib_scin_hit (int i_) const
       {
         audit_vector<calib_calorimeter_hit_type> (calib_scin_hits, i_);
         return calib_scin_hits.at(i_);
       }
 
-      const calib_tracker_hit_type & 
+      const calib_tracker_hit_type &
       export_event::get_calib_gg_hit (int i_) const
       {
         audit_vector<calib_tracker_hit_type> (calib_gg_hits, i_);
         return calib_gg_hits.at(i_);
       }
 
-      const tracker_clustered_hit_type & 
+      const tracker_clustered_hit_type &
       export_event::get_tracker_clustered_hit (int i_) const
       {
         audit_vector<tracker_clustered_hit_type> (tracker_clustered_hits, i_);
         return tracker_clustered_hits.at(i_);
       }
 
-      const tracker_cluster_type & 
+      const tracker_cluster_type &
       export_event::get_tracker_cluster (int i_) const
       {
         audit_vector<tracker_cluster_type> (tracker_clusters, i_);
         return tracker_clusters.at(i_);
       }
 
-      const tracker_trajectory_type & 
+      const tracker_trajectory_type &
       export_event::get_tracker_trajectory (int i_) const
       {
         audit_vector<tracker_trajectory_type> (tracker_trajectories, i_);
         return tracker_trajectories.at(i_);
       }
 
-      const tracker_trajectory_orphan_hit_type & 
+      const tracker_trajectory_orphan_hit_type &
       export_event::get_tracker_trajectory_orphan_hit (int i_) const
       {
         audit_vector<tracker_trajectory_orphan_hit_type> (tracker_trajectory_orphan_hits, i_);
         return tracker_trajectory_orphan_hits.at(i_);
       }
 
-      const tracker_trajectory_pattern_type & 
+      const tracker_trajectory_pattern_type &
       export_event::get_tracker_trajectory_pattern (int i_) const
       {
         audit_vector<tracker_trajectory_pattern_type> (tracker_trajectory_patterns, i_);
         return tracker_trajectory_patterns.at(i_);
       }
 
-      const vertex_type & 
+      const vertex_type &
       export_event::get_tracker_trajectory_vertex (int i_) const
       {
         audit_vector<vertex_type> (tracker_trajectory_vertices, i_);
         return tracker_trajectory_vertices.at(i_);
       }
 
-      const polyline_type & 
+      const polyline_type &
       export_event::get_tracker_trajectory_polyline (int i_) const
       {
         audit_vector<polyline_type> (tracker_trajectory_polylines, i_);
         return tracker_trajectory_polylines.at(i_);
       }
 
-      const helix_type & 
+      const helix_type &
       export_event::get_tracker_trajectory_helix (int i_) const
       {
         audit_vector<helix_type> (tracker_trajectory_helices, i_);
@@ -704,7 +704,7 @@ namespace snemo {
         static bool activated = false;
         if (! activated)
           {
-            implement_introspection (); 
+            implement_introspection ();
             activated = true;
           }
         return;
@@ -964,7 +964,7 @@ namespace snemo {
             .property ("sigmaR", &calib_tracker_hit_type::sigma_r)
             .tag ("ctype", "double")
             .tag ("unit", "mm")
-     
+
             // Special CAT clustering infos :
             .property ("hasCatInfos", &calib_tracker_hit_type::has_cat_infos)
             .tag ("ctype", "bool")
@@ -1008,7 +1008,7 @@ namespace snemo {
             .tag ("ctype", "double")
             .tag ("topic", "CAT")
              ;
-        
+
           camp::Class::declare< calib_calorimeter_hit_type >("calib_calorimeter_hit_type")
             .tag ("version", 0)
             .constructor0()
@@ -1041,7 +1041,7 @@ namespace snemo {
             .tag ("ctype", "double")
             .tag ("unit", "keV")
             ;
-        
+
           camp::Class::declare< tracker_clustered_hit_type >("tracker_clustered_hit_type")
             .tag ("version", 0)
             .constructor0()
@@ -1052,7 +1052,7 @@ namespace snemo {
             .property ("hitId", &tracker_clustered_hit_type::hit_id)
             .tag ("ctype", "int32_t")
            ;
-        
+
           camp::Class::declare< tracker_cluster_type >("tracker_cluster_type")
             .tag ("version", 0)
             .constructor0()
@@ -1183,7 +1183,7 @@ namespace snemo {
             .tag ("ctype", "double")
             .tag ("topic", "CAT")
            ;
-          
+
           camp::Class::declare< vertex_type >("vertex_type")
             .tag ("version", 0)
             .constructor0()
@@ -1212,7 +1212,7 @@ namespace snemo {
             .tag ("ctype", "double")
             .tag ("unit", "mm")
             ;
-         
+
           camp::Class::declare< polyline_type >("polyline_type")
             .tag ("version", 0)
             .constructor0()
@@ -1220,8 +1220,8 @@ namespace snemo {
             .tag ("ctype", "int32_t")
             .property ("numberOfVertexes", &polyline_type::number_of_vertexes)
             .tag ("ctype", "uint32_t")
-            ; 
-       
+            ;
+
           camp::Class::declare< helix_type >("helix_type")
             .tag ("version", 0)
             .constructor0()
@@ -1241,8 +1241,8 @@ namespace snemo {
             .tag ("ctype", "double")
             .property ("t1", &helix_type::t1)
             .tag ("ctype", "double")
-           ; 
-        
+           ;
+
           camp::Class::declare< tracker_trajectory_type >("tracker_trajectory_type")
             .tag ("version", 0)
             .constructor0()
@@ -1263,7 +1263,7 @@ namespace snemo {
             .property ("patternId", &tracker_trajectory_type::pattern_id)
             .tag ("ctype", "int32_t")
            ;
-       
+
           camp::Class::declare< tracker_trajectory_orphan_hit_type >("tracker_trajectory_orphan_hit_type")
             .tag ("version", 0)
             .constructor0()
@@ -1274,7 +1274,7 @@ namespace snemo {
             .property ("hitId", &tracker_trajectory_orphan_hit_type::hit_id)
             .tag ("ctype", "int32_t")
             ;
-       
+
           camp::Class::declare< tracker_trajectory_pattern_type >("tracker_trajectory_pattern_type")
             .tag ("version", 0)
             .constructor0()
@@ -1302,7 +1302,7 @@ namespace snemo {
             ;
 
            /*************************************************************************/
- 
+
           camp::Class::declare< export_event >("export_event")
             .tag ("version", 0)
             .constructor0()
@@ -1311,120 +1311,120 @@ namespace snemo {
 
             // True vertices :
             .property ("trueVertices",      &export_event::true_vertices)
-            .property ("trueVertices@size",  
-                       &std::vector<true_vertex_type>::size, 
+            .property ("trueVertices@size",
+                       &std::vector<true_vertex_type>::size,
                        &export_event::true_vertices)
-            .function ("trueVertices@get",  &export_event::get_true_vertex) 
+            .function ("trueVertices@get",  &export_event::get_true_vertex)
 
-            // True particles :          
+            // True particles :
             .property ("trueParticles",     &export_event::true_particles)
-            .property ("trueParticles@size", 
-                       &std::vector<true_particle_type>::size, 
+            .property ("trueParticles@size",
+                       &std::vector<true_particle_type>::size,
                        &export_event::true_particles)
             .function ("trueParticles@get", &export_event::get_true_particle)
 
-            // True step hits :                    
+            // True step hits :
             .property ("trueStepHits",      &export_event::true_step_hits)
-            .property ("trueStepHits@size", 
-                       &std::vector<true_step_hit_type>::size, 
+            .property ("trueStepHits@size",
+                       &std::vector<true_step_hit_type>::size,
                        &export_event::true_step_hits)
             .function ("trueStepHits@get",  &export_event::get_true_step_hit)
 
-            // True calo hits :                    
+            // True calo hits :
             .property ("trueCaloHits",      &export_event::true_calo_hits)
-            .property ("trueCaloHits@size", 
-                       &std::vector<true_scin_hit_type>::size, 
+            .property ("trueCaloHits@size",
+                       &std::vector<true_scin_hit_type>::size,
                        &export_event::true_calo_hits)
             .function ("trueCaloHits@get",  &export_event::get_true_calo_hit)
 
-            // True xcalo hits :                    
+            // True xcalo hits :
             .property ("trueXcaloHits",     &export_event::true_xcalo_hits)
-            .property ("trueXcaloHits@size", 
-                       &std::vector<true_scin_hit_type>::size, 
+            .property ("trueXcaloHits@size",
+                       &std::vector<true_scin_hit_type>::size,
                        &export_event::true_xcalo_hits)
             .function ("trueXcaloHits@get", &export_event::get_true_xcalo_hit)
 
-            // True gveto hits :                    
+            // True gveto hits :
             .property ("trueGvetoHits",     &export_event::true_gveto_hits)
-            .property ("trueGvetoHits@size", 
-                       &std::vector<true_scin_hit_type>::size, 
+            .property ("trueGvetoHits@size",
+                       &std::vector<true_scin_hit_type>::size,
                        &export_event::true_gveto_hits)
             .function ("trueGvetoHits@get", &export_event::get_true_gveto_hit)
 
-            // True gg hits :                    
+            // True gg hits :
             .property ("trueGgHits",        &export_event::true_gg_hits)
-            .property ("trueGgHits@size", 
-                       &std::vector<true_gg_hit_type>::size, 
+            .property ("trueGgHits@size",
+                       &std::vector<true_gg_hit_type>::size,
                        &export_event::true_gg_hits)
             .function ("trueGgHits@get",    &export_event::get_true_gg_hit)
 
-            // Calibrated scintillator hits :                     
+            // Calibrated scintillator hits :
             .property ("calibScinHits",     &export_event::calib_scin_hits)
-            .property ("calibScinHits@size", 
-                       &std::vector<calib_calorimeter_hit_type>::size, 
+            .property ("calibScinHits@size",
+                       &std::vector<calib_calorimeter_hit_type>::size,
                        &export_event::calib_scin_hits)
             .function ("calibScinHits@get", &export_event::get_calib_scin_hit)
 
-            // Calibrated tracker hits :                               
+            // Calibrated tracker hits :
             .property ("calibTrackerHits",       &export_event::calib_gg_hits)
-            .property ("calibTrackerHits@size", 
-                       &std::vector<calib_tracker_hit_type>::size, 
+            .property ("calibTrackerHits@size",
+                       &std::vector<calib_tracker_hit_type>::size,
                        &export_event::calib_gg_hits)
             .function ("calibTrackerHits@get",   &export_event::get_calib_gg_hit)
 
-            // Tracker clusters :                               
+            // Tracker clusters :
             .property ("trackerClusters",       &export_event::tracker_clusters)
-            .property ("trackerClusters@size", 
-                       &std::vector<tracker_cluster_type>::size, 
+            .property ("trackerClusters@size",
+                       &std::vector<tracker_cluster_type>::size,
                        &export_event::tracker_clusters)
             .function ("trackerClusters@get",   &export_event::get_tracker_cluster)
 
-            // Tracker clustered hits :                               
+            // Tracker clustered hits :
             .property ("trackerClusteredHits",       &export_event::tracker_clustered_hits)
-            .property ("trackerClusteredHits@size", 
-                       &std::vector<tracker_clustered_hit_type>::size, 
+            .property ("trackerClusteredHits@size",
+                       &std::vector<tracker_clustered_hit_type>::size,
                        &export_event::tracker_clustered_hits)
             .function ("trackerClusteredHits@get",   &export_event::get_tracker_clustered_hit)
 
-            // Tracker trajectories :                               
+            // Tracker trajectories :
             .property ("trackerTrajectories",       &export_event::tracker_trajectories)
-            .property ("trackerTrajectories@size", 
-                       &std::vector<tracker_trajectory_type>::size, 
+            .property ("trackerTrajectories@size",
+                       &std::vector<tracker_trajectory_type>::size,
                        &export_event::tracker_trajectories)
             .function ("trackerTrajectories@get",   &export_event::get_tracker_trajectory)
 
-            // Tracker trajectory orphan hits:                               
+            // Tracker trajectory orphan hits:
             .property ("trackerTrajectoryOrphanHits",       &export_event::tracker_trajectory_orphan_hits)
-            .property ("trackerTrajectoryOrphanHits@size", 
-                       &std::vector<tracker_trajectory_orphan_hit_type>::size, 
+            .property ("trackerTrajectoryOrphanHits@size",
+                       &std::vector<tracker_trajectory_orphan_hit_type>::size,
                        &export_event::tracker_trajectory_orphan_hits)
             .function ("trackerTrajectoryOrphanHits@get",   &export_event::get_tracker_trajectory_orphan_hit)
 
-            // Tracker trajectory patterns:                               
+            // Tracker trajectory patterns:
             .property ("trackerTrajectoryPatterns",       &export_event::tracker_trajectory_patterns)
-            .property ("trackerTrajectoryPatterns@size", 
-                       &std::vector<tracker_trajectory_pattern_type>::size, 
+            .property ("trackerTrajectoryPatterns@size",
+                       &std::vector<tracker_trajectory_pattern_type>::size,
                        &export_event::tracker_trajectory_patterns)
             .function ("trackerTrajectoryPatterns@get",   &export_event::get_tracker_trajectory_pattern)
 
-            // Tracker trajectory vertices:                               
+            // Tracker trajectory vertices:
             .property ("trackerTrajectoryVertices",       &export_event::tracker_trajectory_vertices)
-            .property ("trackerTrajectoryVertices@size", 
-                       &std::vector<vertex_type>::size, 
+            .property ("trackerTrajectoryVertices@size",
+                       &std::vector<vertex_type>::size,
                        &export_event::tracker_trajectory_vertices)
             .function ("trackerTrajectoryVertices@get",   &export_event::get_tracker_trajectory_vertex)
 
-            // Tracker trajectory polyline:                               
+            // Tracker trajectory polyline:
             .property ("trackerTrajectoryPolyline",       &export_event::tracker_trajectory_polylines)
-            .property ("trackerTrajectoryPolyline@size", 
-                       &std::vector<polyline_type>::size, 
+            .property ("trackerTrajectoryPolyline@size",
+                       &std::vector<polyline_type>::size,
                        &export_event::tracker_trajectory_polylines)
             .function ("trackerTrajectoryPolyline@get",   &export_event::get_tracker_trajectory_polyline)
 
-            // Tracker trajectory helix:                               
+            // Tracker trajectory helix:
             .property ("trackerTrajectoryHelix",       &export_event::tracker_trajectory_helices)
-            .property ("trackerTrajectoryHelix@size", 
-                       &std::vector<helix_type>::size, 
+            .property ("trackerTrajectoryHelix@size",
+                       &std::vector<helix_type>::size,
                        &export_event::tracker_trajectory_helices)
             .function ("trackerTrajectoryHelix@get",   &export_event::get_tracker_trajectory_helix)
 
@@ -1444,7 +1444,7 @@ namespace snemo {
           }
         std::clog << "NOTICE: export_event::implement_introspection: Exiting.\n";
       }
-      
+
     }  // end of namespace exports
 
   }  // end of namespace reconstruction
@@ -1452,4 +1452,3 @@ namespace snemo {
 }  // end of namespace snemo
 
 /* end of export_event.cc */
- 

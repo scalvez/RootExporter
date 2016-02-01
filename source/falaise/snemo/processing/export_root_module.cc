@@ -8,15 +8,15 @@
 #include <boost/foreach.hpp>
 #include <boost/filesystem.hpp>
 
-#include <snreconstruction/processing/export_root_module.h>
-#include <snreconstruction/exports/export_root_event.h>
+#include <falaise/snemo/processing/export_root_module.h>
+#include <falaise/snemo/exports/export_root_event.h>
 
 #include <datatools/service_manager.h>
 #include <datatools/utils.h>
 
-#include <sncore/models/data_model.h>
-#include <sncore/models/event_header.h>
-#include <sncore/models/calibrated_data.h>
+#include <falaise/snemo/datamodels/data_model.h>
+#include <falaise/snemo/datamodels/event_header.h>
+#include <falaise/snemo/datamodels/calibrated_data.h>
 
 #include <geomtools/geometry_service.h>
 #include <geomtools/manager.h>
@@ -111,7 +111,7 @@ namespace snemo {
                      ! service_manager_.is_a<geomtools::geometry_service> (geo_label),
                      std::logic_error,
                      "Module '" << get_name () << "' has no '" << geo_label << "' service !");
-        geomtools::geometry_service & Geo
+        const geomtools::geometry_service & Geo
           = service_manager_.get<geomtools::geometry_service> (geo_label);
         _exporter_.set_geom_manager (Geo.get_geom_manager ());
 
@@ -380,7 +380,7 @@ namespace snemo {
       }
 
 
-      int export_root_module::_store_event (const snemo::core::model::event_record & event_record_)
+      int export_root_module::_store_event (const snemo::datamodel::event_record & event_record_)
       {
         DT_LOG_TRACE (get_logging_priority (), "Entering...");
         // Get a reference to the export ROOT event :

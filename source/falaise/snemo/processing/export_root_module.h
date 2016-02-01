@@ -24,7 +24,7 @@
 
 #include <dpp/base_module.h>
 
-#include <snreconstruction/exports/event_exporter.h>
+#include <falaise/snemo/exports/event_exporter.h>
 
 #include <datatools/smart_filename.h>
 
