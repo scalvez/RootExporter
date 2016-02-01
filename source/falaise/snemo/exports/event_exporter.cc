@@ -58,8 +58,8 @@ namespace snemo {
         // Check setup label:
         const std::string & setup_label = _geom_manager_->get_setup_label ();
 
-        DT_THROW_IF(setup_label != "snemo" && setup_label != "snemo::tracker_commissioning",
-                    std::logic_error, "Setup label '" << setup_label << "' is not supported !");
+        // DT_THROW_IF(setup_label != "snemo" && setup_label != "snemo::tracker_commissioning",
+        //             std::logic_error, "Setup label '" << setup_label << "' is not supported !");
 
         _init_gid_infos_ ();
         return;
