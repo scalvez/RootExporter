@@ -273,6 +273,11 @@ namespace snemo {
             set_exported (sre::event_exporter::EXPORT_TRACKER_CLUSTERING);
           }
 
+        if (setup_.has_flag ("export.tracker_trajectories"))
+          {
+            set_exported (sre::event_exporter::EXPORT_TRACKER_TRAJECTORIES);
+          }
+
         // If no export directive is given, export all data banks :
         if (_export_flags_ == sre::event_exporter::NO_EXPORT)
           {
